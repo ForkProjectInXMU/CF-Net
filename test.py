@@ -15,10 +15,10 @@ class Test:
     def __init__(self):
         self.transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean=[0.5, 0.5, 0.5],
                                                                                          std=[0.5, 0.5, 0.5])])
-        self.test_dir_pre = args.dir_test
-        self.over_imgs = os.listdir(self.test_dir_pre + 'lr_over/')
+        self.test_dir_pre = r'C:/data/SICE_256/train/'
+        self.over_imgs = os.listdir(self.test_dir_pre + 'oe/')
         self.over_imgs.sort()
-        self.under_imgs = os.listdir(self.test_dir_pre + 'lr_under/')
+        self.under_imgs = os.listdir(self.test_dir_pre + 'ue/')
         self.under_imgs.sort()
         assert len(self.over_imgs) == len(self.under_imgs)
         self.num_imgs = len(self.over_imgs)
@@ -33,9 +33,9 @@ class Test:
         self.model.eval()
         with torch.no_grad():
             for idx in trange(self.num_imgs):
-                img1 = cv2.imread(self.test_dir_pre + 'lr_over/' + self.over_imgs[idx])
+                img1 = cv2.imread(self.test_dir_pre + 'oe/' + self.over_imgs[idx])
                 img1 = torch.unsqueeze(self.transform(img1), 0)
-                img2 = cv2.imread(self.test_dir_pre + 'lr_under/' + self.under_imgs[idx])
+                img2 = cv2.imread(self.test_dir_pre + 'ue/' + self.under_imgs[idx])
                 img2 = torch.unsqueeze(self.transform(img2), 0)
 
                 assert img1.shape == img2.shape
